@@ -116,11 +116,11 @@ class Handler():
                 self.controls["next_btn"].disabled = False
 
 
-## PLOT AREA
+## VISUALIZATION AREAS
 
-# Cell viewer
-plot = figure(x_range=(0, 10), y_range=(0, 10),plot_width=450, plot_height=450)
-content = plot.image(image=[], x=0, y=0, dw=10, dh=10, palette="Greys256")
+# Image viewer
+image = figure(x_range=(0, 10), y_range=(0, 10),plot_width=450, plot_height=450)
+content = image.image(image=[], x=0, y=0, dw=10, dh=10, palette="Greys256")
 
 # Counts viewer
 source = ColumnDataSource(data=dict(label_options=label_options[0:-1], counts=[0 for i in range(8)], color=Spectral8))
@@ -150,25 +150,27 @@ controls = {
 }
 
 
-# Read request arguments
-args = curdoc().session_context.request.arguments
-user = args["user"][0].decode("utf-8")
-
-## HANDLER AND LAYOUT
+## HANDLER, LAYOUT AND WEB APP
 try:
+    # Read request arguments
+    args = curdoc().session_context.request.arguments
+    user = args["user"][0].decode("utf-8")
+
+    # Create interaction handler
     data_handler = Handler(controls, user)
     back_btn.on_click(data_handler.back)
     next_btn.on_click(data_handler.forward)
 
+    # Organize layout
     full_layout = layout([
         [title], 
-        [plot],
+        [image],
         [button_group],
         [row([back_btn, next_btn])],
         [bars]
     ])
 
-    ## LAUNCH WEB APPLICATION
+    # Launch web application
     curdoc().add_root(row( full_layout ))
 except:
     print("Invalid request")
