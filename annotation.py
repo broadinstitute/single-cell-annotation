@@ -173,5 +173,5 @@ try:
     # Launch web application
     curdoc().add_root(row( full_layout ))
 except:
-    print("Invalid request")
+    print("Invalid request (incorrect or no username provided).")
 
