@@ -24,8 +24,8 @@ label_options = [
     "Crenated Sphere", 
     "Smooth sphere", 
     "Side view", 
-    "Undecidable",
-    "SKIP"
+#    "Undecidable",
+#    "SKIP"
 ]
 
 ## EVENT HANDLER
@@ -40,7 +40,7 @@ class Handler():
         self.user = user
 
         # Load user input data
-        self.data = np.load(INPUT_FILE.format(user))
+        self.data = np.load(INPUT_FILE.format("all_cells"))
 
         # Prepare output data
         self.out_file = OUTPUT_FILE.format(user)
@@ -60,7 +60,7 @@ class Handler():
 
     def display_cell(self):
         new_data = dict()
-        new_data["image"] =  [self.data[self.cell,:,:,0]]
+        new_data["image"] =  [self.data[self.cell,:,:,2]]
         self.controls["cell_screen"].data_source.data = new_data
         self.controls["title"].text = "<center><h2>Cell #" + str(self.cell + 1 ) + "</h2></center>"
 
@@ -167,7 +167,7 @@ try:
         [image],
         [button_group],
         [row([back_btn, next_btn])],
-        [bars]
+#        [bars]
     ])
 
     # Launch web application
